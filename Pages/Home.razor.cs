@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Pages;
+namespace Gizmo.RemoteControl.Viewer.Pages;
 
 [Route("/")]
 public partial class Home : ComponentBase

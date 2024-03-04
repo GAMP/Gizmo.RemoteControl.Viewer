@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Gizmo.RemoteControl.Web.Viewer
+namespace Gizmo.RemoteControl.Viewer
 {
     public partial class App_Server : ComponentBase
     {
