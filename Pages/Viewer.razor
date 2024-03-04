@@ -1,0 +1,127 @@
+﻿<PageTitle>Viewer</PageTitle>
+
+<div style="
+    display:grid;
+    grid-template-columns: 270px 1fr;
+    grid-gap: 10px;
+    height:100%;">
+
+    <div style="
+        display:grid;
+        grid-template-rows: auto auto auto 1fr;
+        height: 100%;">
+
+        @if (!string.IsNullOrWhiteSpace(State.Error.Message))
+        {
+            <span style="color:red">
+                @State.Error.Message
+            </span>
+        }
+        @if (!string.IsNullOrWhiteSpace(State.Additional.Warning))
+        {
+            <span style="color:orange">
+                @State.Additional.Warning
+            </span>
+        }
+
+        <EditForm EditContext="_editContext" OnSubmit="ShowRemoteScreen">
+            <DataAnnotationsValidator />
+            <div style="
+                width: 100%;
+                display: grid;
+                grid-template-rows: 1fr 1fr auto auto auto ;
+                grid-gap: 10px;">
+
+                <div>
+                    <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
+                        <label for="sessionId">Session ID</label>
+                        <ValidationMessage style="color:red" For="@(() => State.Connection.SessionId)" />
+                    </span>
+                    <InputText id="sessionId" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Connection.SessionId" />
+                </div>
+
+                <div>
+                    <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
+                        <label for="requesterName">Requester Name</label>
+                        <ValidationMessage style="color:red" For="@(() => State.Connection.RequesterName)" />
+                    </span>
+                    <InputText id="requesterName" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Connection.RequesterName" />
+                </div>
+
+                @if(State.Displays.Names.Length == 0)
+                {
+                    <button style="width:100%; cursor:pointer; height:30px;" type="submit">Connect</button>
+                }
+                else
+                {
+                    <button style="width:100%; cursor:pointer; height:30px;" type="button" @onclick="Service.DisconnectRemoteScreen">Disconnect</button>
+                }
+            </div>
+        </EditForm>
+
+        <div style="
+            margin-top: 10px;
+            display:grid;
+            grid-gap: 5px;
+            grid-template-columns: auto 1fr;
+            align-content: baseline;">
+
+            <span>View only</span>
+            <span style="
+                display:flex;
+                align-items:center;
+                justify-content:flex-end;">
+                <input style="cursor: pointer;" type="checkbox" @bind="State.Connection.ViewOnly" />
+            </span>
+
+            @if (State.Displays.Names.Length != 0)
+            {
+                <button style="width:100%; cursor:pointer; height:30px;" type="button" @onclick="Service.CopyInviteLinkToClipboard">Invite</button>
+                <button style="width:100%; cursor:pointer; height:30px;" type="button" @onclick="Service.ToggleFullScreen">Full Screen Mode</button>
+
+                <span>Displays</span>
+                <select style="cursor: pointer;" @onchange="Service.OnDisplayChange">
+                    @foreach (var display in State.Displays.Names)
+                    {
+                        <option value="@display">@display</option>
+                    }
+                </select>
+
+                <span>Windows sessions</span>
+                <select style="cursor: pointer;" @onchange="Service.OnWindowsSessionChange">
+                    @foreach (var session in State.Sessions)
+                    {
+                        <option value="@session.Id">@($"{session.UserName} ({session.Type})")</option>
+                    }
+                </select>
+
+                <span>Machine name</span>
+                <span>@State.Additional.MachineName</span>
+
+                <span>FPS</span>
+                <span>@State.Metrics.Fps.ToString("0")</span>
+
+                <span>Mbps</span>
+                <span>@State.Metrics.Mbps</span>
+
+                <span>Latency</span>
+                <span>@State.Metrics.Latency.ToString("0.00") ms</span>
+
+                <span>On GPU</span>
+                <span>@(State.Metrics.IsGpu ? "Enabled" : "Unavailable")</span>
+            }
+
+        </div>
+
+    </div>
+
+    <canvas @ref="State.Canvas.Element"
+            @attributes="State.Canvas.Attributes"
+            @onmousemove="Service.OnMouseMove"
+            @onmousedown="Service.OnMouseDown"
+            @onmouseup="Service.OnMouseUp"
+            @onclick="Service.OnMouseClick"
+            @onmousewheel="Service.OnMouseWheel">
+    </canvas>
+
+</div>

@@ -1,0 +1,18 @@
+/** @format */
+
+// build light theme
+
+/* == register base == */
+@import '../variables.scss';
+@import '../typography.scss';
+@import '../mixin.scss';
+@import '../global.scss';
+/* == register light theme base == */
+@import './variables.scss';
+@import './typography.scss';
+@import './mixin.scss';
+@import './global.scss';
+/* == register light theme modules == */
+@import './components/main';
+@import './layouts/main';
+@import './pages/main';

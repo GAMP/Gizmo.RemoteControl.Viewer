@@ -1,0 +1,89 @@
+/** @format */
+
+@mixin fontH1($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 700;
+  font-size: getRem(40);
+  line-height: getRem(52);
+  color: $color;
+}
+
+@mixin fontH2($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 700;
+  font-size: getRem(28);
+  line-height: getRem(36);
+  color: $color;
+}
+
+@mixin fontH3($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 700;
+  font-size: getRem(24);
+  line-height: getRem(32);
+  color: $color;
+}
+
+@mixin fontH4($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 700;
+  font-size: getRem(20);
+  line-height: getRem(28);
+  color: $color;
+}
+
+@mixin fontH5($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 700;
+  font-size: getRem(18);
+  line-height: getRem(24);
+  color: $color;
+}
+
+@mixin fontH6($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 700;
+  font-size: getRem(16);
+  line-height: getRem(24);
+  color: $color;
+}
+
+@mixin fontXL($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 400;
+  font-size: getRem(16);
+  line-height: getRem(24);
+  color: $color;
+}
+
+@mixin fontL($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 400;
+  font-size: getRem(14);
+  line-height: getRem(20);
+  color: $color;
+}
+
+@mixin fontM($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 400;
+  font-size: getRem(12);
+  line-height: getRem(16);
+  color: $color;
+}
+
+@mixin fontS($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 400;
+  font-size: getRem(10);
+  line-height: getRem(18);
+  color: $color;
+}
+
+@mixin fontXS($color: $color-100) {
+  letter-spacing: initial;
+  font-weight: 400;
+  font-size: getRem(10);
+  line-height: getRem(12);
+  color: $color;
+}

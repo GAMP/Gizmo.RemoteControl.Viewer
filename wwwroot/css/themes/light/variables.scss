@@ -1,0 +1,36 @@
+/** @format */
+
+$theme-attr-name: 'light-theme';
+
+/* = colors = */
+$light-color-primary: #526ed3;
+$light-color-primary-hover: #6c86e2;
+$light-color-primary-active: #314692;
+$light-color-primary-disabled: #f0f0f0;
+
+$light-color-secondary: #ffffff;
+$light-color-secondary-hover: #f4f4f4;
+$light-color-secondary-active: #ececec;
+$light-color-secondary-disabled: #f0f0f0;
+
+$light-color-critical-light: #fde7e9;
+$light-color-critical-dark: #c42b1c;
+
+$light-color-caution-light: #fff4ce;
+$light-color-caution-dark: #9d5d00;
+
+$light-color-success-light: #dff6dd;
+$light-color-success-dark: #0f7b0f;
+
+/* = sizes = */
+$light-size-extrasmall: 24;
+$light-size-small: 32;
+$light-size-medium: 52;
+$light-size-large: 64;
+$light-size-extralarge: 72;
+
+/* = Shadow = */
+$light-shadow-8: 0px 2px 4px 0px rgba(0, 0, 0, 0.14);
+$light-shadow-16: 0px 4px 8px 0px rgba(0, 0, 0, 0.14);
+$light-shadow-32: 0px 8px 16px 0px rgba(0, 0, 0, 0.14);
+$light-shadow-128: 0px 32px 64px rgba(0, 0, 0, 0.19), 0px 2px 21px rgba(0, 0, 0, 0.15);

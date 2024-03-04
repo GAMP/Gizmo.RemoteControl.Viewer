@@ -1,0 +1,17 @@
+/** @format */
+
+a {
+  [#{$theme-attr-name}] & {
+    color: $light-color-primary-hover;
+    &:hover {
+      color: $light-color-primary-active;
+    }
+  }
+}
+
+.disabled,
+[disabled] {
+  [#{$theme-attr-name}] & {
+    pointer-events: none;
+  }
+}

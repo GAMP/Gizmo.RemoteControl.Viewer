@@ -1,0 +1,51 @@
+/** @format */
+
+@use 'sass:math';
+
+/* == Sizes == */
+
+// Get size for the property from pixels to rem
+@function getRem($px) {
+  $rem: math.div($px, 16) * 1rem;
+  @return $rem;
+}
+
+@mixin setRem($property, $values...) {
+  $remValues: ();
+  @each $value in $values {
+    $remValue: math.div($value, 16) + rem;
+    $remValues: append($remValues, $remValue);
+  }
+  #{$property}: $remValues;
+}
+
+/* == Schemes == */
+
+@mixin lightScheme($opacity: $opacity-0) {
+  @if ($opacity == $opacity-0) {
+    background-color: $color-0;
+  } @else {
+    $opacity: math.div($opacity, 100);
+    background-color: rgba($color-100, $opacity);
+  }
+
+  @if ($opacity > 0.49) {
+    color: $color-0;
+  } @else {
+    color: $color-100;
+  }
+}
+
+@mixin darkScheme($opacity: $opacity-0) {
+  @if$opacity == $opacity-0 {
+    background-color: $color-100;
+  } @else {
+    $opacity: math.div($opacity, 100);
+    background-color: rgba($color-0, $opacity);
+  }
+  @if ($opacity < 0.41) {
+    color: $color-100;
+  } @else {
+    color: $color-0;
+  }
+}

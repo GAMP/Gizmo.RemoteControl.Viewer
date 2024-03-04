@@ -1,0 +1,9 @@
+/** @format */
+
+.giz-rcv-layout {
+  [#{$theme-attr-name}] & {
+    height:100%;
+    padding: getRem(20);
+    @include fontM();
+  }
+}
