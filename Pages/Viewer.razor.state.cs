@@ -1,6 +1,6 @@
-﻿using Gizmo.RemoteControl.Web.Viewer.Models;
+﻿using Gizmo.RemoteControl.Viewer.Models;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Pages
+namespace Gizmo.RemoteControl.Viewer.Pages
 {
     public sealed class ViewerState
     {

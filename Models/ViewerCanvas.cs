@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Models
+namespace Gizmo.RemoteControl.Viewer.Models
 {
     public sealed class ViewerCanvas
     {

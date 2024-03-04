@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 
 using Gizmo.RemoteControl.Shared.Enums;
+using Gizmo.RemoteControl.Viewer.Pages;
 
 namespace Gizmo.RemoteControl.Web.Viewer.Pages;
 

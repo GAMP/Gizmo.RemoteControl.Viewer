@@ -2,8 +2,9 @@
 using Gizmo.RemoteControl.Shared.Helpers;
 using Gizmo.RemoteControl.Shared.Models;
 using Gizmo.RemoteControl.Shared.Models.Dtos;
-using Gizmo.RemoteControl.Web.Viewer.Models.Settings;
-using Gizmo.RemoteControl.Web.Viewer.Pages;
+using Gizmo.RemoteControl.Viewer.Models.Settings;
+using Gizmo.RemoteControl.Viewer.Pages;
+
 using MessagePack;
 
 using Microsoft.AspNetCore.SignalR.Client;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Services
+namespace Gizmo.RemoteControl.Viewer.Services
 {
     public sealed class ViewerHubConnection(
         ILogger<ViewerHubConnection> logger,
@@ -87,7 +88,7 @@ namespace Gizmo.RemoteControl.Web.Viewer.Services
                 _connection = null;
             }
         }
-        
+
         public async Task Send<T>(T dto, DtoType type)
         {
             if (_connection is not null && _connection.State is HubConnectionState.Connected)
@@ -166,8 +167,8 @@ namespace Gizmo.RemoteControl.Web.Viewer.Services
             const int ChunkSize = 50_000;
 
             FrameReceivedDto frameReceivedDto = new();
-            int frameChunksCount = 0;
-            
+            var frameChunksCount = 0;
+
             List<byte> frameBuffer = [];
             float x = default;
             float y = default;
@@ -208,7 +209,7 @@ namespace Gizmo.RemoteControl.Web.Viewer.Services
                     y = BitConverter.ToSingle(header[8..12].Span);
                     width = BitConverter.ToSingle(header[12..16].Span);
                     height = BitConverter.ToSingle(header[16..20].Span);
-                    
+
                     frameReceivedDto.Timestamp = BitConverter.ToInt64(header[20..28].Span);
                 }
 

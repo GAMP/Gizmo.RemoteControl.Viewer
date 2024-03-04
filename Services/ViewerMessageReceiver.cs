@@ -3,11 +3,11 @@
 using Gizmo.RemoteControl.Shared.Helpers;
 using Gizmo.RemoteControl.Shared.Models;
 using Gizmo.RemoteControl.Shared.Models.Dtos;
-using Gizmo.RemoteControl.Web.Viewer.Pages;
+using Gizmo.RemoteControl.Viewer.Pages;
 
 using MessagePack;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Services;
+namespace Gizmo.RemoteControl.Viewer.Services;
 public class ViewerMessageReceiver(ViewerState state, ViewerService service)
 {
     private readonly ViewerState _state = state;
@@ -17,8 +17,8 @@ public class ViewerMessageReceiver(ViewerState state, ViewerService service)
     {
         var wrapper = MessagePackSerializer.Deserialize<DtoWrapper>(dto, cancellationToken: cToken);
 
-        return wrapper is null 
-            ? throw new InvalidOperationException("Failed to deserialize dto.") 
+        return wrapper is null
+            ? throw new InvalidOperationException("Failed to deserialize dto.")
             : HandleDtoWrapper(wrapper, cToken);
     }
     public void OnShowMessage(string message)
@@ -44,7 +44,7 @@ public class ViewerMessageReceiver(ViewerState state, ViewerService service)
     }
 
     #region DTO HANDLERS
-    
+
     private async Task HandleDtoWrapper(DtoWrapper wrapper, CancellationToken cToken)
     {
         switch (wrapper.DtoType)
@@ -76,8 +76,8 @@ public class ViewerMessageReceiver(ViewerState state, ViewerService service)
                 throw new InvalidOperationException("Unknown dto type.");
         }
     }
-    
-    private Task HandleClipboardText(DtoWrapper wrapper, CancellationToken cToken) => 
+
+    private Task HandleClipboardText(DtoWrapper wrapper, CancellationToken cToken) =>
         DtoChunker.TryComplete<ClipboardTextDto>(wrapper, out var dto)
             ? _service.SetClipboardText(dto.ClipboardText)
             : throw new InvalidOperationException("Failed to complete clipboard text dto.");
@@ -135,7 +135,7 @@ public class ViewerMessageReceiver(ViewerState state, ViewerService service)
         else
             throw new InvalidOperationException("Failed to complete windows sessions dto.");
     }
-    
+
     #endregion
 
     private void CursorChange(CursorInfo cursorInfo)

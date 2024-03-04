@@ -1,15 +1,15 @@
 ﻿using System.Text.Json;
 
 using Gizmo.RemoteControl.Shared.Enums;
-using Gizmo.RemoteControl.Web.Viewer.Models;
-using Gizmo.RemoteControl.Web.Viewer.Services;
+using Gizmo.RemoteControl.Viewer.Models;
+using Gizmo.RemoteControl.Viewer.Services;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.JSInterop;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Pages
+namespace Gizmo.RemoteControl.Viewer.Pages
 {
     public sealed class ViewerService : IDisposable
     {
@@ -68,7 +68,7 @@ namespace Gizmo.RemoteControl.Web.Viewer.Pages
         {
             _state.Additional.Warning = warning;
         }
-        
+
         public async Task<ViewerSettings> GetSettings()
         {
             if (_state.Settings is not null)
@@ -109,7 +109,7 @@ namespace Gizmo.RemoteControl.Web.Viewer.Pages
         {
             if (JsRuntime is null)
                 throw new InvalidOperationException("JSRuntime is not set. Use this method from OnAfterRenderAsync.");
-            
+
             await JsRuntime.InvokeVoidAsync("InternalFunctions.ToggleFullScreen", _state.Canvas.Element);
         }
         public async Task SetClipboardText(string text)
@@ -128,7 +128,7 @@ namespace Gizmo.RemoteControl.Web.Viewer.Pages
                 throw new InvalidOperationException("Parameters for connection to the server are not valid.");
         }
         public Task DisconnectRemoteScreen() => _connection.Disconnect();
-        
+
         public async Task DrawImage(byte[] image, float x, float y, float width, float height)
         {
             if (JsRuntime is null)

@@ -1,4 +1,4 @@
-﻿namespace Gizmo.RemoteControl.Web.Viewer.Models
+﻿namespace Gizmo.RemoteControl.Viewer.Models
 {
     public sealed record ViewerSettings(string? DisplayName);
 }

@@ -1,8 +1,8 @@
 ﻿using Gizmo.RemoteControl.Shared.Enums;
 using Gizmo.RemoteControl.Shared.Models.Dtos;
-using Gizmo.RemoteControl.Web.Viewer.Pages;
+using Gizmo.RemoteControl.Viewer.Pages;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Services
+namespace Gizmo.RemoteControl.Viewer.Services
 {
     public sealed class ViewerMessageSender(ViewerState state, ViewerHubConnection connection)
     {

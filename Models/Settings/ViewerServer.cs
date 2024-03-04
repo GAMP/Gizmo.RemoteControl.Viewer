@@ -1,4 +1,4 @@
-﻿namespace Gizmo.RemoteControl.Web.Viewer.Models.Settings
+﻿namespace Gizmo.RemoteControl.Viewer.Models.Settings
 {
     public sealed class ViewerServer
     {

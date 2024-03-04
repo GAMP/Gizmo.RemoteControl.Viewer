@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 using Gizmo.RemoteControl.Shared.Enums;
 
-namespace Gizmo.RemoteControl.Web.Viewer.Models
+namespace Gizmo.RemoteControl.Viewer.Models
 {
     public sealed class ViewerConnection
     {

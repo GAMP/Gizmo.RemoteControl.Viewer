@@ -1,11 +1,11 @@
-﻿using Gizmo.RemoteControl.Web.Viewer.Models.Settings;
-using Gizmo.RemoteControl.Web.Viewer.Pages;
-using Gizmo.RemoteControl.Web.Viewer.Services;
+﻿using Gizmo.RemoteControl.Viewer.Models.Settings;
+using Gizmo.RemoteControl.Viewer.Pages;
+using Gizmo.RemoteControl.Viewer.Services;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Gizmo.RemoteControl.Web.Viewer
+namespace Gizmo.RemoteControl.Viewer
 {
     public static class Registrations
     {
