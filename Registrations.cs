@@ -9,7 +9,7 @@ namespace Gizmo.RemoteControl.Viewer
 {
     public static class Registrations
     {
-        public static IServiceCollection AddViewer(this IServiceCollection services)
+        public static IServiceCollection AddRemoteControlViewer(this IServiceCollection services)
         {
             services
                 .AddSingleton<ViewerHubConnection>()

@@ -2,7 +2,7 @@
 
 namespace Gizmo.RemoteControl.Viewer.Pages;
 
-[Route("/")]
+[Route("/remotecontrol")]
 public partial class Home : ComponentBase
 {
 }

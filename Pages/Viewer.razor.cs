@@ -6,7 +6,7 @@ using Gizmo.RemoteControl.Shared.Enums;
 
 namespace Gizmo.RemoteControl.Viewer.Pages;
 
-[Route("/viewer")]
+[Route("/remotecontrol/viewer")]
 public partial class Viewer : ComponentBase
 {
     [Parameter, SupplyParameterFromQuery] public string? SessionId { get; set; }
