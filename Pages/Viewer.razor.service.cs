@@ -110,14 +110,14 @@ namespace Gizmo.RemoteControl.Viewer.Pages
             if (JsRuntime is null)
                 throw new InvalidOperationException("JSRuntime is not set. Use this method from OnAfterRenderAsync.");
 
-            await JsRuntime.InvokeVoidAsync("InternalFunctions.ToggleFullScreen", _state.Canvas.Element);
+            await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.ToggleFullScreen", _state.Canvas.Element);
         }
         public async Task SetClipboardText(string text)
         {
             if (JsRuntime is null)
                 throw new InvalidOperationException("JSRuntime is not set. Use this method from OnAfterRenderAsync.");
 
-            await JsRuntime.InvokeVoidAsync("InternalFunctions.SetClipboardText", text);
+            await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.SetClipboardText", text);
         }
 
         public Task ConnectRemoteScreen(CancellationToken cToken)
@@ -134,7 +134,7 @@ namespace Gizmo.RemoteControl.Viewer.Pages
             if (JsRuntime is null)
                 throw new InvalidOperationException("JSRuntime is not set. Use this method from OnAfterRenderAsync.");
 
-            await JsRuntime.InvokeVoidAsync("InternalFunctions.DrawImage", _state.Canvas.Element, image, x, y, width, height);
+            await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.DrawImage", _state.Canvas.Element, image, x, y, width, height);
         }
 
         public Task OnDisplayChange(ChangeEventArgs args)

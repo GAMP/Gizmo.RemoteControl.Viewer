@@ -3,7 +3,7 @@
 //If we use these functions from .Net, we need to name them with a capital letter,otherwise, we must call them with a lowercase letter.
 //We must use static classes for different logic areas. If the logic is general, we can use the InternalFunctions
 
-window.InternalFunctions = class InternalFunctions {
+window.GizmoRemoteControlInternalFunctions = class GizmoRemoteControlInternalFunctions{
   static async DrawImage(canvas, image, x, y, width, height) {
     const bitmap = await createImageBitmap(new Blob([image]));
 
@@ -14,37 +14,37 @@ window.InternalFunctions = class InternalFunctions {
 
   static SubscribeEvents(dotNetObject) {
     window.removeEventListener("keydown", (e) =>
-      PrivateFunctions.onKeyDown(e, dotNetObject)
+      GizmoRemoteControlPrivateFunctions.onKeyDown(e, dotNetObject)
     );
     window.addEventListener("keydown", (e) =>
-      PrivateFunctions.onKeyDown(e, dotNetObject)
+      GizmoRemoteControlPrivateFunctions.onKeyDown(e, dotNetObject)
     );
 
     window.removeEventListener("keyup", (e) =>
-      PrivateFunctions.onKeyUp(e, dotNetObject)
+      GizmoRemoteControlPrivateFunctions.onKeyUp(e, dotNetObject)
     );
     window.addEventListener("keyup", (e) =>
-      PrivateFunctions.onKeyUp(e, dotNetObject)
+      GizmoRemoteControlPrivateFunctions.onKeyUp(e, dotNetObject)
     );
 
     window.removeEventListener("blur", () =>
-      PrivateFunctions.onBlur(dotNetObject)
+      GizmoRemoteControlPrivateFunctions.onBlur(dotNetObject)
     );
     window.addEventListener("blur", () =>
-      PrivateFunctions.onBlur(dotNetObject)
+      GizmoRemoteControlPrivateFunctions.onBlur(dotNetObject)
     );
   }
 
   static WatchClipboard(dotNetObject) {
-    PrivateFunctions.watchClipboard(dotNetObject);
+    GizmoRemoteControlPrivateFunctions.watchClipboard(dotNetObject);
   }
 
   static SetClipboardText(text) {
-    if (text == PrivateFunctions.LastClipboardText) {
+    if (text == GizmoRemoteControlPrivateFunctions.LastClipboardText) {
       return;
     }
 
-    PrivateFunctions.NewClipboardText = text;
+    GizmoRemoteControlPrivateFunctions.NewClipboardText = text;
   }
 
   static ToggleFullScreen(canvas) {
@@ -56,7 +56,7 @@ window.InternalFunctions = class InternalFunctions {
   }
 };
 
-class PrivateFunctions {
+class GizmoRemoteControlPrivateFunctions {
   static onKeyDown(e, dotNetObject) {
     if (!e.ctrlKey || !e.shiftKey || e.key.toLowerCase() != "i") {
       e.preventDefault();

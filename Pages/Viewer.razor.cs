@@ -38,10 +38,10 @@ public partial class Viewer : ComponentBase
 
             var dotNetObjectRef = DotNetObjectReference.Create(this);
 
-            await JsRuntime.InvokeVoidAsync("InternalFunctions.WatchClipboard", dotNetObjectRef);
+            await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.WatchClipboard", dotNetObjectRef);
 
             if (!State.Connection.ViewOnly)
-                await JsRuntime.InvokeVoidAsync("InternalFunctions.SubscribeEvents", dotNetObjectRef);
+                await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.SubscribeEvents", dotNetObjectRef);
 
             ViewerService.SetJSRuntime(JsRuntime);
 
