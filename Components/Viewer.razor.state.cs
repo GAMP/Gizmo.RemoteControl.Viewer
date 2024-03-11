@@ -1,6 +1,6 @@
 ﻿using Gizmo.RemoteControl.Viewer.Models;
 
-namespace Gizmo.RemoteControl.Viewer.Pages
+namespace Gizmo.RemoteControl.Viewer.Components
 {
     public sealed class ViewerState
     {
@@ -8,7 +8,7 @@ namespace Gizmo.RemoteControl.Viewer.Pages
 
         public ViewerCanvas Canvas { get; internal set; } = new();
 
-        public ViewerConnection Connection { get; internal set; } = new();
+        public ViewerRequestParameters RequestParameters { get; internal set; } = new();
         public ViewerMetrics Metrics { get; internal set; } = new();
         public ViewerSettings? Settings { get; internal set; }
         public List<ViewerSession> Sessions { get; internal set; } = [];

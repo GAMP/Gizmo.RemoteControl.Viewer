@@ -4,8 +4,11 @@ using Gizmo.RemoteControl.Shared.Enums;
 
 namespace Gizmo.RemoteControl.Viewer.Models
 {
-    public sealed class ViewerConnection
+    public sealed class ViewerRequestParameters
     {
+        [Required(ErrorMessage = "is required.")]
+        public string ServerUrl { get; internal set; } = string.Empty;
+        
         [Required(ErrorMessage = "is required.")]
         public string AccessKey { get; internal set; } = string.Empty;
 
@@ -18,6 +21,10 @@ namespace Gizmo.RemoteControl.Viewer.Models
         public bool ViewOnly { get; internal set; } = false;
         public RemoteControlMode Mode { get; internal set; } = RemoteControlMode.Attended;
 
-        public bool IsValid => !string.IsNullOrEmpty(AccessKey) && !string.IsNullOrEmpty(SessionId) && !string.IsNullOrEmpty(RequesterName);
+        public bool IsValid => 
+            !string.IsNullOrEmpty(ServerUrl) 
+            && !string.IsNullOrEmpty(AccessKey) 
+            && !string.IsNullOrEmpty(SessionId) 
+            && !string.IsNullOrEmpty(RequesterName);
     }
 }

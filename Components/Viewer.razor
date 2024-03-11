@@ -1,6 +1,4 @@
-﻿<PageTitle>Viewer</PageTitle>
-
-<div style="
+﻿<div style="
     display:grid;
     grid-template-columns: 270px 1fr;
     grid-gap: 10px;
@@ -35,17 +33,17 @@
                 <div>
                     <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
                         <label for="sessionId">Session ID</label>
-                        <ValidationMessage style="color:red" For="@(() => State.Connection.SessionId)" />
+                        <ValidationMessage style="color:red" For="@(() => State.RequestParameters.SessionId)" />
                     </span>
-                    <InputText id="sessionId" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Connection.SessionId" />
+                    <InputText id="sessionId" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.RequestParameters.SessionId" />
                 </div>
 
                 <div>
                     <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
                         <label for="requesterName">Requester Name</label>
-                        <ValidationMessage style="color:red" For="@(() => State.Connection.RequesterName)" />
+                        <ValidationMessage style="color:red" For="@(() => State.RequestParameters.RequesterName)" />
                     </span>
-                    <InputText id="requesterName" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Connection.RequesterName" />
+                    <InputText id="requesterName" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.RequestParameters.RequesterName" />
                 </div>
 
                 @if(State.Displays.Names.Length == 0)
@@ -71,7 +69,7 @@
                 display:flex;
                 align-items:center;
                 justify-content:flex-end;">
-                <input style="cursor: pointer;" type="checkbox" @bind="State.Connection.ViewOnly" />
+                <input style="cursor: pointer;" type="checkbox" @bind="State.RequestParameters.ViewOnly" />
             </span>
 
             @if (State.Displays.Names.Length != 0)

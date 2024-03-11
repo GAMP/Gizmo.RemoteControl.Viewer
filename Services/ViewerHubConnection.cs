@@ -2,26 +2,23 @@
 using Gizmo.RemoteControl.Shared.Helpers;
 using Gizmo.RemoteControl.Shared.Models;
 using Gizmo.RemoteControl.Shared.Models.Dtos;
-using Gizmo.RemoteControl.Viewer.Models.Settings;
-using Gizmo.RemoteControl.Viewer.Pages;
+using Gizmo.RemoteControl.Viewer.Components;
+using Gizmo.RemoteControl.Viewer.Models;
 
 using MessagePack;
 
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
 namespace Gizmo.RemoteControl.Viewer.Services
 {
     public sealed class ViewerHubConnection(
         ILogger<ViewerHubConnection> logger,
-        IOptions<ViewerServer> serverOptions,
         IServiceScopeFactory serviceScopeFactory)
     {
         private readonly ILogger _logger = logger;
-        private readonly ViewerServer _viewerServerSettings = serverOptions.Value;
 
         private HubConnection? _connection;
         private EventHandler<(string, CancellationToken)>? _onError;
@@ -29,7 +26,7 @@ namespace Gizmo.RemoteControl.Viewer.Services
         public EventHandler<string>? OnError { get; set; }
         public EventHandler<string>? OnWarning { get; set; }
 
-        public async Task Connect(string sessionId, string accessKey, string requesterName, CancellationToken cToken)
+        internal async Task Connect(ViewerAgent agent, CancellationToken cToken)
         {
             if (_connection is not null)
             {
@@ -47,7 +44,7 @@ namespace Gizmo.RemoteControl.Viewer.Services
             try
             {
                 _connection = new HubConnectionBuilder()
-                    .WithUrl($"{_viewerServerSettings.Scheme}://{_viewerServerSettings.Host}:{_viewerServerSettings.Port}/hubs/viewer")
+                    .WithUrl($"{agent.ServerUrl}/hubs/viewer")
                     .AddMessagePackProtocol(options =>
                     {
                         options.SerializerOptions = MessagePackSerializerOptions.Standard
@@ -65,7 +62,7 @@ namespace Gizmo.RemoteControl.Viewer.Services
                 await _connection.StartAsync(cToken);
 
                 var viewerService = serviceScope.ServiceProvider.GetRequiredService<ViewerService>();
-                await StartDesktopStream(_connection, viewerService, sessionId, accessKey, requesterName, cToken);
+                await StartDesktopStream(_connection, viewerService, agent.SessionId, agent.AccessKey, agent.RequesterName, cToken);
 
                 await _connection.StopAsync(cToken);
                 await _connection.DisposeAsync();

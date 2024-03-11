@@ -3,8 +3,7 @@
 using Gizmo.RemoteControl.Shared.Helpers;
 using Gizmo.RemoteControl.Shared.Models;
 using Gizmo.RemoteControl.Shared.Models.Dtos;
-using Gizmo.RemoteControl.Viewer.Pages;
-
+using Gizmo.RemoteControl.Viewer.Components;
 using MessagePack;
 
 namespace Gizmo.RemoteControl.Viewer.Services;
@@ -28,8 +27,8 @@ public class ViewerMessageReceiver(ViewerState state, ViewerService service)
     }
     public void OnRelaunchedScreenCasterReady(string sessionId, string accessKey)
     {
-        _state.Connection.SessionId = sessionId;
-        _state.Connection.AccessKey = accessKey;
+        _state.RequestParameters.SessionId = sessionId;
+        _state.RequestParameters.AccessKey = accessKey;
         _state.HasChanged?.Invoke(this, EventArgs.Empty);
     }
     public void OnCursorChange(CursorInfo cursorInfo)
