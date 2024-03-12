@@ -20,7 +20,7 @@ public partial class ViewerById : ComponentBase
         _sessionId = Id;
         _accessKey = Id;
         _requesterName = Id;
-        _viewOnly = false;
+        _viewOnly = true;
         _mode = Id;
     }
 }

@@ -10,8 +10,8 @@ if (!process.env.VIEWER_OUTPUT_PATH) {
 
 module.exports = {
   entry: {
-    code: "./wwwroot/js/main.js",
-    style: "./wwwroot/css/main.scss",
+    remotecontrol_code: "./wwwroot/js/main.js",
+    remotecontrol_style: "./wwwroot/css/main.scss",
   },
   // plugins: [
   //   new CopyWebpackPlugin({
