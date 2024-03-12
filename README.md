@@ -8,18 +8,6 @@
 
 ## How to use
 
-### 0. Configuration
-
-- Use the following JSON configuration section in your Host configuration file
-
-```json
-  "RemoteControlServer": {
-    "Scheme": "http", // your server's scheme
-    "Host": "localhost", // your server's host
-    "Port": 81 // your server's port
-  }
-```
-
 ### 1. Add libraries to your project as a git submodule
 
 #### &emsp;1.1. Open a command line in your repository root
@@ -89,8 +77,8 @@ services.AddRemoteControlViewer();
 #### &emsp;6.1. Add the following script tag
 
 ```html
-<script src="your wwwroot path/remotecontrol_viewer/code.js"></script>
-<script src="your wwwroot path/remotecontrol_viewer/style.js"></script>
+<script src="your wwwroot path/remotecontrol_viewer/remotecontrol_code.js"></script>
+<script src="your wwwroot path/remotecontrol_viewer/remotecontrol_style.js"></script>
 ```
 
 ## FOR REMOTE CONTROL SYSTEM'S SERVER (ONLY .NET 8 AND LATER)
