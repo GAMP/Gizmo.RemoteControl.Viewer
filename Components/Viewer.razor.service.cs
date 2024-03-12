@@ -38,26 +38,26 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public static void SetJSRuntime(IJSRuntime jsRuntime) => JsRuntime = jsRuntime;
 
-        public void SetConnectionData(string? sessionId, string? accessKey, string? requesterName, bool? viewOnly, string? mode)
+        public void SetParameters(string? serverUrl, string? sessionId, string? accessKey, string? requesterName, bool? viewOnly, string? modeStr)
         {
-            if (!string.IsNullOrWhiteSpace(sessionId))
-                _state.RequestParameters.SessionId = sessionId;
+            _state.Parameters.ServerUrl = serverUrl ?? string.Empty;
+            _state.Parameters.SessionId = sessionId ?? string.Empty;
+            _state.Parameters.AccessKey = accessKey ?? string.Empty;
+            _state.Parameters.RequesterName = requesterName ?? string.Empty;
+            _state.Parameters.ViewOnly = viewOnly ?? true;
+            
+            if(Enum.TryParse<RemoteControlMode>(modeStr, out var mode))
+                _state.Parameters.Mode =  mode;
+        }
 
-            if (!string.IsNullOrWhiteSpace(accessKey))
-                _state.RequestParameters.AccessKey = accessKey;
-
-            if (!string.IsNullOrWhiteSpace(requesterName))
-                _state.RequestParameters.RequesterName = requesterName;
-
-            if (viewOnly is not null)
-                _state.RequestParameters.ViewOnly = viewOnly.Value;
-
-            if (mode is not null)
-                _state.RequestParameters.Mode = Enum.Parse<RemoteControlMode>(mode);
+        public void SetRequesterName(string? displayName)
+        {
+            if (string.IsNullOrEmpty(_state.Parameters.RequesterName) && !string.IsNullOrWhiteSpace(displayName))
+                _state.Parameters.RequesterName = displayName;
         }
         public void SetConnectionMode(RemoteControlMode mode)
         {
-            _state.RequestParameters.Mode = mode;
+            _state.Parameters.Mode = mode;
         }
         public void SetError(string? error)
         {
@@ -96,9 +96,9 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public async Task CopyInviteLinkToClipboard()
         {
-            var inviteLink = _state.RequestParameters.Mode == RemoteControlMode.Attended
-                ? $"{_navigationManager.Uri}?sessionId={_state.RequestParameters.SessionId}"
-                : $"{_navigationManager.Uri}?mode=Unattended&sessionId={_state.RequestParameters.SessionId}&accessKey={_state.RequestParameters.AccessKey}";
+            var inviteLink = _state.Parameters.Mode == RemoteControlMode.Attended
+                ? $"{_navigationManager.Uri}?sessionId={_state.Parameters.SessionId}"
+                : $"{_navigationManager.Uri}?mode=Unattended&sessionId={_state.Parameters.SessionId}&accessKey={_state.Parameters.AccessKey}";
 
             await SetClipboardText(inviteLink);
 
@@ -121,13 +121,8 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public Task ConnectRemoteScreen(CancellationToken cToken)
         {
-            if (_state.RequestParameters.IsValid)
-            {
-                var agent = new ViewerAgent(_state.RequestParameters.ServerUrl, _state.RequestParameters.SessionId, _state.RequestParameters.AccessKey, _state.RequestParameters.RequesterName);
+                var agent = new ViewerAgent(_state.Parameters.ServerUrl, _state.Parameters.SessionId, _state.Parameters.AccessKey, _state.Parameters.RequesterName);
                 return _connection.Connect(agent, cToken);
-            }
-            else
-                throw new InvalidOperationException("Parameters for connection to the server are not valid.");
         }
         public Task DisconnectRemoteScreen() => _connection.Disconnect();
 
@@ -158,7 +153,7 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public Task OnMouseMove(MouseEventArgs args)
         {
-            if (!_state.RequestParameters.ViewOnly && JsRuntime is not null)
+            if (!_state.Parameters.ViewOnly && JsRuntime is not null)
             {
                 var x = args.OffsetX / Convert.ToDouble(_state.Canvas.Width);
                 var y = args.OffsetY / Convert.ToDouble(_state.Canvas.Height);
@@ -171,7 +166,7 @@ namespace Gizmo.RemoteControl.Viewer.Components
         }
         public Task OnMouseDown(MouseEventArgs args)
         {
-            if (!_state.RequestParameters.ViewOnly && JsRuntime is not null)
+            if (!_state.Parameters.ViewOnly && JsRuntime is not null)
             {
                 var x = args.OffsetX / Convert.ToDouble(_state.Canvas.Width);
                 var y = args.OffsetY / Convert.ToDouble(_state.Canvas.Height);
@@ -184,7 +179,7 @@ namespace Gizmo.RemoteControl.Viewer.Components
         }
         public Task OnMouseUp(MouseEventArgs args)
         {
-            if (!_state.RequestParameters.ViewOnly && JsRuntime is not null)
+            if (!_state.Parameters.ViewOnly && JsRuntime is not null)
             {
                 var x = args.OffsetX / Convert.ToDouble(_state.Canvas.Width);
                 var y = args.OffsetY / Convert.ToDouble(_state.Canvas.Height);
@@ -197,7 +192,7 @@ namespace Gizmo.RemoteControl.Viewer.Components
         }
         public Task OnMouseClick(MouseEventArgs args)
         {
-            if (!_state.RequestParameters.ViewOnly && JsRuntime is not null)
+            if (!_state.Parameters.ViewOnly && JsRuntime is not null)
             {
                 var x = args.OffsetX / Convert.ToDouble(_state.Canvas.Width);
                 var y = args.OffsetY / Convert.ToDouble(_state.Canvas.Height);
@@ -208,16 +203,16 @@ namespace Gizmo.RemoteControl.Viewer.Components
                 return Task.CompletedTask;
             }
         }
-        public Task OnMouseWheel(WheelEventArgs args) => !_state.RequestParameters.ViewOnly && JsRuntime is not null
+        public Task OnMouseWheel(WheelEventArgs args) => !_state.Parameters.ViewOnly && JsRuntime is not null
             ? _sender.SendMouseWheel(args.DeltaX, args.OffsetY)
             : Task.CompletedTask;
-        public Task OnKeyDown(string key) => !_state.RequestParameters.ViewOnly && JsRuntime is not null
+        public Task OnKeyDown(string key) => !_state.Parameters.ViewOnly && JsRuntime is not null
             ? _sender.SendKeyDown(key)
             : Task.CompletedTask;
-        public Task OnKeyUp(string key) => !_state.RequestParameters.ViewOnly && JsRuntime is not null
+        public Task OnKeyUp(string key) => !_state.Parameters.ViewOnly && JsRuntime is not null
             ? _sender.SendKeyUp(key)
             : Task.CompletedTask;
-        public Task OnBlur() => !_state.RequestParameters.ViewOnly && JsRuntime is not null
+        public Task OnBlur() => !_state.Parameters.ViewOnly && JsRuntime is not null
             ? _sender.SendSetKeyStatesUp()
             : Task.CompletedTask;
         public Task OnSendClipboardText(string text, bool typeText) =>

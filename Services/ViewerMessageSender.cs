@@ -9,10 +9,10 @@ namespace Gizmo.RemoteControl.Viewer.Services
         private readonly ViewerState _state = state;
         private readonly ViewerHubConnection _connection = connection;
 
-        public Task GetWindowsSessions() => _state.RequestParameters.Mode == RemoteControlMode.Unattended
+        public Task GetWindowsSessions() => _state.Parameters.Mode == RemoteControlMode.Unattended
             ? _connection.Send(new WindowsSessionsDto([]), DtoType.WindowsSessions)
             : Task.CompletedTask;
-        public Task ChangeWindowsSession(int sessionId) => _state.RequestParameters.Mode == RemoteControlMode.Unattended
+        public Task ChangeWindowsSession(int sessionId) => _state.Parameters.Mode == RemoteControlMode.Unattended
             ? _connection.Send("ChangeWindowsSession", sessionId)
             : Task.CompletedTask;
         public Task SendSelectScreen(string displayName) => _connection.Send(new SelectScreenDto

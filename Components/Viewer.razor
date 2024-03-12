@@ -27,24 +27,41 @@
             <div style="
                 width: 100%;
                 display: grid;
-                grid-template-rows: 1fr 1fr auto auto auto ;
+                grid-template-rows: 1fr 1fr 1fr 1fr auto auto auto ;
                 grid-gap: 10px;">
 
                 <div>
                     <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
-                        <label for="sessionId">Session ID</label>
-                        <ValidationMessage style="color:red" For="@(() => State.RequestParameters.SessionId)" />
+                        <label for="requesterName">Requester Name</label>
+                        <ValidationMessage style="color:red" For="@(() => State.Parameters.RequesterName)" />
                     </span>
-                    <InputText id="sessionId" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.RequestParameters.SessionId" />
+                    <InputText id="requesterName" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Parameters.RequesterName" />
                 </div>
 
                 <div>
                     <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
-                        <label for="requesterName">Requester Name</label>
-                        <ValidationMessage style="color:red" For="@(() => State.RequestParameters.RequesterName)" />
+                        <label for="serverUrl">Server URL</label>
+                        <ValidationMessage style="color:red" For="@(() => State.Parameters.ServerUrl)" />
                     </span>
-                    <InputText id="requesterName" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.RequestParameters.RequesterName" />
+                    <InputText id="serverUrl" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Parameters.ServerUrl" />
                 </div>
+
+                <div>
+                    <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
+                        <label for="sessionId">Session ID</label>
+                        <ValidationMessage style="color:red" For="@(() => State.Parameters.SessionId)" />
+                    </span>
+                    <InputText id="sessionId" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Parameters.SessionId" />
+                </div>
+
+                <div>
+                    <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
+                        <label for="accessKey">Access Key</label>
+                        <ValidationMessage style="color:red" For="@(() => State.Parameters.AccessKey)" />
+                    </span>
+                    <InputText id="accessKey" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Parameters.AccessKey" />
+                </div>
+
 
                 @if(State.Displays.Names.Length == 0)
                 {
@@ -69,7 +86,7 @@
                 display:flex;
                 align-items:center;
                 justify-content:flex-end;">
-                <input style="cursor: pointer;" type="checkbox" @bind="State.RequestParameters.ViewOnly" />
+                <input style="cursor: pointer;" type="checkbox" @bind="State.Parameters.ViewOnly" />
             </span>
 
             @if (State.Displays.Names.Length != 0)

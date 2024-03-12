@@ -8,7 +8,7 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public ViewerCanvas Canvas { get; internal set; } = new();
 
-        public ViewerRequestParameters RequestParameters { get; internal set; } = new();
+        public ViewerParameters Parameters { get; internal set; } = new();
         public ViewerMetrics Metrics { get; internal set; } = new();
         public ViewerSettings? Settings { get; internal set; }
         public List<ViewerSession> Sessions { get; internal set; } = [];

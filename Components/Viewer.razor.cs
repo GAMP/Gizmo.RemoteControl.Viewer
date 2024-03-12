@@ -8,7 +8,7 @@ namespace Gizmo.RemoteControl.Viewer.Components;
 
 public partial class Viewer : ComponentBase
 {
-    [Parameter] public string? Server { get; set; }
+    [Parameter] public string? ServerUrl { get; set; }
     [Parameter] public string? SessionId { get; set; }
     [Parameter] public string? AccessKey { get; set; }
     [Parameter] public string? RequesterName { get; set; }
@@ -25,9 +25,11 @@ public partial class Viewer : ComponentBase
 
     protected override void OnInitialized()
     {
-        Service.SetConnectionData(SessionId, AccessKey, RequesterName, ViewOnly, Mode);
+        Service.SetError(null);
+        Service.SetWarning(null);
 
-        _editContext = new(State.RequestParameters);
+        Service.SetParameters(ServerUrl, SessionId, AccessKey, RequesterName, ViewOnly, Mode);
+        _editContext = new(State.Parameters);
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -40,17 +42,16 @@ public partial class Viewer : ComponentBase
 
             await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.WatchClipboard", dotNetObjectRef);
 
-            if (!State.RequestParameters.ViewOnly)
+            if (!State.Parameters.ViewOnly)
                 await JsRuntime.InvokeVoidAsync("GizmoRemoteControlInternalFunctions.SubscribeEvents", dotNetObjectRef);
 
             ViewerService.SetJSRuntime(JsRuntime);
 
             var settings = await Service.GetSettings();
 
-            if (string.IsNullOrEmpty(State.RequestParameters.RequesterName) && !string.IsNullOrWhiteSpace(settings.DisplayName))
-                Service.SetConnectionData(null, null, settings.DisplayName, null, null);
+            Service.SetRequesterName(settings.DisplayName);
 
-            if (State.RequestParameters.Mode == RemoteControlMode.Unattended && _editContext.Validate())
+            if (State.Parameters.Mode == RemoteControlMode.Unattended && _editContext.Validate())
             {
                 await Service.ConnectRemoteScreen(CancellationToken.None);
             }
@@ -65,7 +66,7 @@ public partial class Viewer : ComponentBase
 
         if (_editContext.Validate())
         {
-            await Service.SetSettings(new(State.RequestParameters.RequesterName));
+            await Service.SetSettings(new(State.Parameters.RequesterName));
             await Service.ConnectRemoteScreen(CancellationToken.None);
         }
     }

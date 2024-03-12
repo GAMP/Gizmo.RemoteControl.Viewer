@@ -1,7 +1,7 @@
 {
   "name": "webpack_builder",
   "version": "1.0.0",
-  "description": "Gizmo.RemoteControl.Web.Viewer",
+  "description": "Gizmo.RemoteControl.Viewer",
   "scripts": {
     "watch_dev": "webpack --config webpack/webpack.dev.watch.js",
     "build_dev": "webpack --config webpack/webpack.dev.js",

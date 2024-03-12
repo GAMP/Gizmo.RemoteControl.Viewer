@@ -27,8 +27,8 @@ public class ViewerMessageReceiver(ViewerState state, ViewerService service)
     }
     public void OnRelaunchedScreenCasterReady(string sessionId, string accessKey)
     {
-        _state.RequestParameters.SessionId = sessionId;
-        _state.RequestParameters.AccessKey = accessKey;
+        _state.Parameters.SessionId = sessionId;
+        _state.Parameters.AccessKey = accessKey;
         _state.HasChanged?.Invoke(this, EventArgs.Empty);
     }
     public void OnCursorChange(CursorInfo cursorInfo)
