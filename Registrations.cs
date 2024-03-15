@@ -12,6 +12,7 @@ namespace Gizmo.RemoteControl.Viewer
             .AddSingleton<ViewerState>()
             .AddScoped<ViewerService>()
             .AddScoped<ViewerMessageSender>()
-            .AddScoped<ViewerMessageReceiver>();
+            .AddScoped<ViewerMessageReceiver>()
+            .AddScoped<HttpClient>();
     }
 }
