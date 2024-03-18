@@ -17,12 +17,12 @@ public partial class ViewerById : ComponentBase
 
     [Inject] public HttpClient HttpClient { get; set; } = default!;
 
-    private string? _serverUrl;
-    private string? _sessionId;
-    private string? _accessKey;
-    private string? _requesterName;
-    private bool? _viewOnly;
-    private string? _mode;
+    private string _serverUrl = null!;
+    private string _sessionId = null!;
+    private string _accessKey = null!;
+    private string _requesterName = null!;
+    private bool _viewOnly;
+    private string _mode = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -36,11 +36,13 @@ public partial class ViewerById : ComponentBase
 
             var session = await HttpClient.GetFromJsonAsync<RemoteControlSession>($"{_serverUrl}/api/v2/remotecontrol/{Id}/session");
 
-            _sessionId = session?.Result.SessionId.ToString();
-            _accessKey = session?.Result.SessionPassword;
+            _sessionId = session?.Result.SessionId.ToString() ?? string.Empty;
+            _accessKey = session?.Result.SessionPassword ?? string.Empty;
             _requesterName = "Gizmo";
             _viewOnly = true;
             _mode = "Attended";
+
+            StateHasChanged();
         }
     }
 }

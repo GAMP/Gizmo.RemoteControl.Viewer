@@ -27,10 +27,14 @@ public partial class Viewer : ComponentBase
     {
         Service.SetError(null);
         Service.SetWarning(null);
+    }
 
+    protected override void OnParametersSet()
+    {
         Service.SetParameters(ServerUrl, SessionId, AccessKey, RequesterName, ViewOnly, Mode);
         _editContext = new(State.Parameters);
     }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
