@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
@@ -19,8 +21,6 @@ public partial class ViewerById : ComponentBase
     [Parameter] public int Id { get; set; }
 
     [Inject] public HttpClient HttpClient { get; set; } = default!;
-    [Inject] public IJSRuntime JSRuntime { get; set; } = default!;
-
     [Inject] public IHttpContextAccessor HttpContextAccessor { get; set; } = default!;
 
     private string _serverUrl = null!;
@@ -34,11 +34,13 @@ public partial class ViewerById : ComponentBase
     {
         if (firstRender)
         {
-            _serverUrl = "http://localhost:81";
-
             var token = HttpContextAccessor.HttpContext.Request.Cookies["_BASE_AUTH_COOKIE"];
+            var isAuth = HttpContextAccessor.HttpContext.User?.Identity?.IsAuthenticated; // true
 
-            HttpClient.DefaultRequestHeaders.Authorization = new("Bearer", token);
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic");
+            HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            _serverUrl = "http://localhost:81";
 
             var session = await HttpClient.GetFromJsonAsync<RemoteControlSession>($"{_serverUrl}/api/v2/remotecontrol/hosts/{Id}/session");
 
