@@ -1,27 +1,16 @@
-﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Text;
+﻿using Gizmo.RemoteControl.Viewer.Services;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
-using Microsoft.JSInterop;
 
 namespace Gizmo.RemoteControl.Viewer.Pages;
-
-public sealed record AccessTokenValue(string Token, string RefreshToken);
-public sealed record AccessToken(AccessTokenValue Result, string? Version, int HttpStatusCode, bool isError, string? Message);
-public sealed record SessionCreateResult(Guid SessionId, string SessionPassword);
-public sealed record RemoteControlSession(SessionCreateResult Result, string? Version, int HttpStatusCode, bool isError, string? Message);
-
 
 [Authorize, Route("/remotecontrol/hosts/{Id:int}")]
 public partial class ViewerById : ComponentBase
 {
     [Parameter] public int Id { get; set; }
+    [Inject] public IRemoteControlViewerSessionService RemoteControlViewerSessionService { get; set; } = default!;
 
-    [Inject] public HttpClient HttpClient { get; set; } = default!;
-    [Inject] public IHttpContextAccessor HttpContextAccessor { get; set; } = default!;
 
     private string _serverUrl = null!;
     private string _sessionId = null!;
@@ -34,18 +23,12 @@ public partial class ViewerById : ComponentBase
     {
         if (firstRender)
         {
-            var token = HttpContextAccessor.HttpContext.Request.Cookies["_BASE_AUTH_COOKIE"];
-            var isAuth = HttpContextAccessor.HttpContext.User?.Identity?.IsAuthenticated; // true
+            var session = await RemoteControlViewerSessionService.CreateSessionAsync(Id);
 
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic");
-            HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _serverUrl = session.ServerUrl;
+            _sessionId = session.Id.ToString();
+            _accessKey = session.Password;
 
-            _serverUrl = "http://localhost:81";
-
-            var session = await HttpClient.GetFromJsonAsync<RemoteControlSession>($"{_serverUrl}/api/v2/remotecontrol/hosts/{Id}/session");
-
-            _sessionId = session?.Result.SessionId.ToString() ?? string.Empty;
-            _accessKey = session?.Result.SessionPassword ?? string.Empty;
             _requesterName = "Gizmo";
             _viewOnly = true;
             _mode = "Attended";
