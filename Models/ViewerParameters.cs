@@ -7,7 +7,7 @@ namespace Gizmo.RemoteControl.Viewer.Models
     public sealed class ViewerParameters
     {
         [Required(ErrorMessage = "is required.")]
-        public string ServerUrl { get; internal set; } = string.Empty;
+        public string Host { get; internal set; } = string.Empty;
         
         [Required(ErrorMessage = "is required.")]
         public string AccessKey { get; internal set; } = string.Empty;

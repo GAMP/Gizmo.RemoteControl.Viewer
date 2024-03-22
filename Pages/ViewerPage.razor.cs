@@ -6,28 +6,28 @@ using Microsoft.AspNetCore.Components;
 namespace Gizmo.RemoteControl.Viewer.Pages;
 
 [Authorize, Route("/remotecontrol/hosts/{Id:int}")]
-public partial class ViewerById : ComponentBase
+public partial class ViewerPage : ComponentBase
 {
     [Parameter] public int Id { get; set; }
-    [Inject] public IRemoteControlViewerSessionService RemoteControlViewerSessionService { get; set; } = default!;
+    [Inject] public IRemoteControlViewerService Service { get; set; } = default!;
 
 
-    private string _serverUrl = null!;
-    private string _sessionId = null!;
-    private string _accessKey = null!;
-    private string _requesterName = null!;
+    private string? _host;
+    private string? _sessionId;
+    private string? _accessKey;
+    private string? _requesterName;
     private bool _viewOnly;
-    private string _mode = null!;
+    private string? _mode;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            var session = await RemoteControlViewerSessionService.CreateSessionAsync(Id);
+            var session = await Service.CreateSessionAsync(Id);
 
-            _serverUrl = session.ServerUrl;
+            _host = session.Host;
             _sessionId = session.Id.ToString();
-            _accessKey = session.Password;
+            _accessKey = session.AccessKey;
 
             _requesterName = "Gizmo";
             _viewOnly = true;

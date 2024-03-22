@@ -8,7 +8,7 @@ namespace Gizmo.RemoteControl.Viewer.Components;
 
 public partial class Viewer : ComponentBase
 {
-    [Parameter] public string? ServerUrl { get; set; }
+    [Parameter] public string? Host { get; set; }
     [Parameter] public string? SessionId { get; set; }
     [Parameter] public string? AccessKey { get; set; }
     [Parameter] public string? RequesterName { get; set; }
@@ -31,7 +31,7 @@ public partial class Viewer : ComponentBase
 
     protected override void OnParametersSet()
     {
-        Service.SetParameters(ServerUrl, SessionId, AccessKey, RequesterName, ViewOnly, Mode);
+        Service.SetParameters(Host, SessionId, AccessKey, RequesterName, ViewOnly, Mode);
         _editContext = new(State.Parameters);
     }
 

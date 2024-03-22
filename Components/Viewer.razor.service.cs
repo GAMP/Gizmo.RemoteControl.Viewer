@@ -38,9 +38,9 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public static void SetJSRuntime(IJSRuntime jsRuntime) => JsRuntime = jsRuntime;
 
-        public void SetParameters(string? serverUrl, string? sessionId, string? accessKey, string? requesterName, bool? viewOnly, string? modeStr)
+        public void SetParameters(string? host, string? sessionId, string? accessKey, string? requesterName, bool? viewOnly, string? modeStr)
         {
-            _state.Parameters.ServerUrl = serverUrl ?? string.Empty;
+            _state.Parameters.Host = host ?? string.Empty;
             _state.Parameters.SessionId = sessionId ?? string.Empty;
             _state.Parameters.AccessKey = accessKey ?? string.Empty;
             _state.Parameters.RequesterName = requesterName ?? string.Empty;
@@ -121,7 +121,7 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public Task ConnectRemoteScreen(CancellationToken cToken)
         {
-                var agent = new ViewerAgent(_state.Parameters.ServerUrl, _state.Parameters.SessionId, _state.Parameters.AccessKey, _state.Parameters.RequesterName);
+                var agent = new ViewerAgent(_state.Parameters.Host, _state.Parameters.SessionId, _state.Parameters.AccessKey, _state.Parameters.RequesterName);
                 return _connection.Connect(agent, cToken);
         }
         public Task DisconnectRemoteScreen() => _connection.Disconnect();

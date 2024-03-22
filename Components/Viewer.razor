@@ -41,9 +41,9 @@
                 <div>
                     <span style="display:grid; grid-template-columns: auto 1fr; grid-gap:5px;">
                         <label for="serverUrl">Server URL</label>
-                        <ValidationMessage style="color:red" For="@(() => State.Parameters.ServerUrl)" />
+                        <ValidationMessage style="color:red" For="@(() => State.Parameters.Host)" />
                     </span>
-                    <InputText id="serverUrl" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Parameters.ServerUrl" />
+                    <InputText id="serverUrl" style="padding-left:10px; height:30px; width:100%" @bind-Value="State.Parameters.Host" />
                 </div>
 
                 <div>
