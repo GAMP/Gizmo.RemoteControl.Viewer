@@ -155,10 +155,14 @@ namespace Gizmo.RemoteControl.Viewer.Services
         }
         private async Task StartDesktopStream(HubConnection connection, ViewerService service, string sessionId, string accessKey, string requesterName, CancellationToken cToken)
         {
+            OnWarning?.Invoke(this, "Connecting to the host...");
+
             var result = await connection.InvokeAsync<Result>("SendScreenCastRequestToDevice", sessionId, accessKey, requesterName, cToken);
 
             if (!result.IsSuccess)
                 throw new InvalidOperationException(result.Reason);
+            
+            OnWarning?.Invoke(this, string.Empty);
 
             const int FrameHeaderSize = 28;
             const int ChunkSize = 50_000;

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+
 using Gizmo.RemoteControl.Shared.Enums;
 using Gizmo.RemoteControl.Viewer.Models;
 using Gizmo.RemoteControl.Viewer.Services;
@@ -45,9 +46,9 @@ namespace Gizmo.RemoteControl.Viewer.Components
             _state.Parameters.AccessKey = accessKey ?? string.Empty;
             _state.Parameters.RequesterName = requesterName ?? string.Empty;
             _state.Parameters.ViewOnly = viewOnly ?? true;
-            
-            if(Enum.TryParse<RemoteControlMode>(modeStr, out var mode))
-                _state.Parameters.Mode =  mode;
+
+            if (Enum.TryParse<RemoteControlMode>(modeStr, out var mode))
+                _state.Parameters.Mode = mode;
         }
 
         public void SetRequesterName(string? displayName)
@@ -121,8 +122,8 @@ namespace Gizmo.RemoteControl.Viewer.Components
 
         public Task ConnectRemoteScreen(CancellationToken cToken)
         {
-                var agent = new ViewerAgent(_state.Parameters.Host, _state.Parameters.SessionId, _state.Parameters.AccessKey, _state.Parameters.RequesterName);
-                return _connection.Connect(agent, cToken);
+            var agent = new ViewerAgent(_state.Parameters.Host, _state.Parameters.SessionId, _state.Parameters.AccessKey, _state.Parameters.RequesterName);
+            return _connection.Connect(agent, cToken);
         }
         public Task DisconnectRemoteScreen() => _connection.Disconnect();
 
